@@ -44,6 +44,7 @@ public class FragmentDiolinux extends Fragment {
             @Override
             public void onRefresh() {
                 new UpdateAppsAsyncTask().execute();
+                swipeRefresh.setRefreshing(false);
             }
         });
         new UpdateAppsAsyncTask().execute();

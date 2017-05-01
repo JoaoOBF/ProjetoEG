@@ -38,6 +38,7 @@ public class FragmentBrLinux extends Fragment {
             @Override
             public void onRefresh() {
                 new UpdateAppsAsyncTask().execute();
+                swipeRefresh.setRefreshing(false);
             }
         });
         //swipeRefresh.setColorSchemeResources(R.color.vermelho, R.color.blue, R.color.orange);
