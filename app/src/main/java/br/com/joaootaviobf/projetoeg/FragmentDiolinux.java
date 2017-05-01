@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class FragmentDiolinux extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
@@ -37,6 +39,13 @@ public class FragmentDiolinux extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_diolux);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new UpdateAppsAsyncTask().execute();
+            }
+        });
         new UpdateAppsAsyncTask().execute();
         return view;
 

@@ -11,10 +11,15 @@
         android:layout_height="91dp"
         android:background="@android:color/darker_gray"
         app:srcCompat="@drawable/diolinux" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_diolux"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="237dp"
-        android:layout_weight="0.82" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_diolux"
+            android:layout_width="match_parent"
+            android:layout_height="422dp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
