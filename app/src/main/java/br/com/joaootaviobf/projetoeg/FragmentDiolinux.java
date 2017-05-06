@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,6 +32,8 @@ public class FragmentDiolinux extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefresh;
+    private int contNoticias;
+    private boolean att;
 
     @Nullable
     @Override
@@ -43,6 +46,7 @@ public class FragmentDiolinux extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+              att=true;
                 new UpdateAppsAsyncTask().execute();
                 swipeRefresh.setRefreshing(false);
             }
@@ -75,7 +79,16 @@ public class FragmentDiolinux extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mRecyclerView.setAdapter(new MyAdapter(getListaDeNoticias(),getContext()));
+
+            if (contNoticias == listaDeNoticiasFinais.size()&& att) {
+                att=false;
+                Toast.makeText(getContext(), "Não há novas nóticias", Toast.LENGTH_SHORT).show();
+                contNoticias = listaDeNoticiasFinais.size();
+            } else {
+                att=false;
+                contNoticias = listaDeNoticiasFinais.size();
+            }
+            mRecyclerView.setAdapter(new MyAdapter(listaDeNoticiasFinais,getContext()));
         }
 
         public String processaDados() {
@@ -103,9 +116,6 @@ public class FragmentDiolinux extends Fragment {
             return txt;
         }
 
-        public ArrayList<Noticia> getListaDeNoticias() {
-            return listaDeNoticiasFinais;
-        }
     }
 
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class FragmentBrLinux extends Fragment {
     private MineradorBRLinux mineradorBRLinux;
     private ArrayList<Noticia> listaDeNoticiasFinais;
     private SwipeRefreshLayout swipeRefresh;
+    private int contNoticias;
+    private boolean att;
 
     @Nullable
     @Override
@@ -37,6 +40,7 @@ public class FragmentBrLinux extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+               att=true;
                 new UpdateAppsAsyncTask().execute();
                 swipeRefresh.setRefreshing(false);
             }
@@ -65,6 +69,14 @@ public class FragmentBrLinux extends Fragment {
             super.onPostExecute(aVoid);
             listaDeNoticiasFinais = mineradorBRLinux.getListaDeNoticiasFinais();
             if (listaDeNoticiasFinais!=null){
+                if (contNoticias == listaDeNoticiasFinais.size() && att) {
+                   att=false;
+                    Toast.makeText(getContext(), "Não há novas nóticias", Toast.LENGTH_SHORT).show();
+                    contNoticias = listaDeNoticiasFinais.size();
+                } else {
+                    att=false;
+                    contNoticias = listaDeNoticiasFinais.size();
+                }
                 mRecyclerView.setAdapter(new MyAdapter(listaDeNoticiasFinais,getContext()));
             }
 
