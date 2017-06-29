@@ -26,6 +26,7 @@ public class FixedTabsPageAdapter extends FragmentPagerAdapter   {
                 return new FragmentBrLinux();
             case 2:
                 return new FragmentOpenSource();
+
             default:
                 return null;
         }
@@ -42,11 +43,12 @@ public class FixedTabsPageAdapter extends FragmentPagerAdapter   {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "DIO linux";
+                return "DIO Linux";
             case 1:
-                return "BR linux";
+                return "BR Linux";
             case 2:
-                return "Open source";
+                return "Open Source";
+
             default:
                 return null;
         }
